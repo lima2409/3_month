@@ -1,6 +1,9 @@
 import flet as ft
 from datetime import datetime
 import os
+import random
+
+names_list = ["Алексей", "Мария", "Иван", "Ольга", "Дмитрий", "Анна", "Сергей", "Екатерина"]
 
 FILE_NAME = "history.txt"
 
@@ -76,6 +79,9 @@ def main_page(page: ft.Page):
             else ft.ThemeMode.LIGHT
         )
         page.update()
+    def random_name(_):
+        name_input.value = random.choice(names_list)
+        page.update() 
 
     name_input = ft.TextField(
         on_submit=on_button_click,
@@ -104,7 +110,12 @@ def main_page(page: ft.Page):
         on_click=add_to_favorites
     )
 
-    main_row = ft.Row([name_input, send_button, theme_button, fav_button])
+    random_button = ft.ElevatedButton(
+    'Случайное имя',
+    on_click=random_name
+    )
+
+    main_row = ft.Row([name_input, send_button, theme_button, fav_button, random_button])
     history_row = ft.Row([history_text, clear_button])
 
     page.add(text_hello, main_row, history_row, favorites_text)
